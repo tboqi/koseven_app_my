@@ -1,0 +1,21 @@
+    server
+    {
+        listen    80;
+        server_name my.tbq.com;
+        index index.php;
+        root /home/tboqi/tbqapps/php/tbq.com/apps/my;
+
+        location / {
+            index index.php;
+            try_files $uri $uri/ /index.php?$uri&$args;
+        }
+
+        location ~ .*\.(php|php5)?$
+        {
+            try_files $uri =404;
+            fastcgi_pass 127.0.0.1:9000;
+            fastcgi_index index.php;
+            include fastcgi.conf;
+        }
+        access_log off;
+    }
